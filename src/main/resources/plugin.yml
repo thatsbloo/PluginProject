@@ -1,0 +1,17 @@
+name: PluginProject
+version: '1.0-SNAPSHOT'
+main: me.thatsbloo.pluginProject.PluginProject
+api-version: '1.21'
+commands:
+  getgold:
+    description: 'Get your current gold'
+    usage: "/getgold"
+  getbounty:
+    description: 'Get your current bounty'
+    usage: "/getbounty"
+  setgold:
+    description: 'Set the gold of one of the players or yourself'
+    usage: '/setgold <amount> [player]'
+  setbounty:
+    description: 'Set the bounty of one of the players or yourself'
+    usage: '/setbounty <amount> [player]'
