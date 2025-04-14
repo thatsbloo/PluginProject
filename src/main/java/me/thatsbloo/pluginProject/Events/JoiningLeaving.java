@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class JoiningLeaving implements Listener {
 
@@ -28,9 +29,11 @@ public class JoiningLeaving implements Listener {
         event.setJoinMessage("§6Welcome, §r" + p.getDisplayName() + "§6!");
 
         if (!loadPlayerData(p)) {
+            PluginProject.log.info("Initializing data instead.");
             PersistentDataContainer data = p.getPersistentDataContainer();
             data.set(PluginProject.keyGold, PersistentDataType.INTEGER, 0);
             data.set(PluginProject.keyBounty, PersistentDataType.INTEGER, 0);
+            data.set(PluginProject.keyKillstreak, PersistentDataType.INTEGER, 0);
         }
     }
 
@@ -50,16 +53,18 @@ public class JoiningLeaving implements Listener {
 
         int gold = pdc.getOrDefault(PluginProject.keyGold, PersistentDataType.INTEGER, 0);
         int bounty = pdc.getOrDefault(PluginProject.keyBounty, PersistentDataType.INTEGER, 0);
+        int killstreak = pdc.getOrDefault(PluginProject.keyKillstreak, PersistentDataType.INTEGER, 0);
 
         config.set(uuid + ".gold", gold);
         config.set(uuid + ".bounty", bounty);
+        config.set(uuid + ".killstreak", killstreak);
 
         try {
             config.save(dataFile);
-            System.out.println("Saved player data successfully");
+            PluginProject.log.info("Saved Player data.");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed to save player data");
+            PluginProject.log.warning("Failed to save player data. {gold: " + gold + ", bounty: " + bounty + "}" );
         }
     }
 
@@ -70,13 +75,14 @@ public class JoiningLeaving implements Listener {
 
         if (config.contains(uuid)) {
             PersistentDataContainer pdc = player.getPersistentDataContainer();
-            pdc.set(PluginProject.keyGold, PersistentDataType.INTEGER, config.getInt(uuid + ".gold"));
-            pdc.set(PluginProject.keyBounty, PersistentDataType.INTEGER, config.getInt(uuid + ".bounty"));
+            pdc.set(PluginProject.keyGold, PersistentDataType.INTEGER, config.getInt(uuid + ".gold", 0));
+            pdc.set(PluginProject.keyBounty, PersistentDataType.INTEGER, config.getInt(uuid + ".bounty", 0));
+            pdc.set(PluginProject.keyKillstreak, PersistentDataType.INTEGER, config.getInt(uuid + ".killstreak", 0));
 
-            System.out.println("Loaded player data");
+            PluginProject.log.info("Loaded player data.");
             return true;
         } else {
-            System.out.println("Failed to load player data");
+            PluginProject.log.info("Failed to load player data.");
             return false;
         }
     }

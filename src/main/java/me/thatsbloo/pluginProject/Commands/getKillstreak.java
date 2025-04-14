@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class getBounty implements CommandExecutor {
+public class getKillstreak implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
@@ -19,13 +19,13 @@ public class getBounty implements CommandExecutor {
                 Player p = (Player) sender;
 
                 PersistentDataContainer pdc = p.getPersistentDataContainer();
-                int bounty = pdc.getOrDefault(PluginProject.keyBounty, PersistentDataType.INTEGER, 0);
+                int gold = pdc.getOrDefault(PluginProject.keyKillstreak, PersistentDataType.INTEGER, 0);
 
-                p.sendMessage("§rYour current bounty is: §l§4" + bounty);
+                p.sendMessage("§rYour current killstreak is: §l§6" + gold);
             } else {
-                sender.sendMessage("This command can only be used by players.");
+                sender.sendMessage("This command can only be used by players, if you wish to check out someone's killstreak do /getkillstreak <player>.");
             }
-        }  else if (args.length == 1) {
+        } else if (args.length == 1) {
             Player p = Bukkit.getPlayer(args[0]);
 
             if (p == null) {
@@ -34,9 +34,9 @@ public class getBounty implements CommandExecutor {
             }
 
             PersistentDataContainer pdc = p.getPersistentDataContainer();
-            int gold = pdc.getOrDefault(PluginProject.keyBounty, PersistentDataType.INTEGER, 0);
+            int gold = pdc.getOrDefault(PluginProject.keyKillstreak, PersistentDataType.INTEGER, 0);
 
-            p.sendMessage(p.getDisplayName() + "§r's current bounty is: §l§4" + gold);
+            p.sendMessage(p.getDisplayName() + "§r's current killstreak is: §l§6" + gold);
 
         }
 

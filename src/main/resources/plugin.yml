@@ -4,11 +4,14 @@ main: me.thatsbloo.pluginProject.PluginProject
 api-version: '1.21'
 commands:
   getgold:
-    description: 'Get your current gold'
-    usage: "/getgold"
+    description: "Get your current gold or another player's"
+    usage: "/getgold [player]"
   getbounty:
-    description: 'Get your current bounty'
-    usage: "/getbounty"
+    description: "Get your current bounty or another player's"
+    usage: "/getbounty [player]"
+  getkillstreak:
+    description: "Get your current killstreak or another player's"
+    usage: "/getkillstreak [player]"
   setgold:
     description: 'Set the gold of one of the players or yourself'
     usage: '/setgold <amount> [player]'
